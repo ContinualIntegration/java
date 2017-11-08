@@ -19,10 +19,11 @@
 
 # default jdk attributes
 default['java']['install_flavor'] = "openjdk"
-default['java']['jdk_version'] = '6'
-default['java']['arch'] = kernel['machine'] =~ /x86_64/ ? "x86_64" : "i586"
+default['java']['jdk_version'] = '8'
+#default['java']['arch'] = kernel['machine'] =~ /x86_64/ ? "x86_64" : "i586"
+default['java']['arch'] = "x86_64"  # For Ubuntu 16.04, the above line needed to be commented out.
 
-case platform
+case node['platform']  # Needs to be compatible with Chef version 13.
 when "centos","redhat","fedora"
   default['java']['java_home'] = "/usr/lib/jvm/java"
 when "freebsd"
