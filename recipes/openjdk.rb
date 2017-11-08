@@ -42,15 +42,15 @@ end
 if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
   ruby_block "update-java-alternatives" do
     block do
-      if platform?("ubuntu", "debian") and version == 6
+      if platform?("ubuntu", "debian") and version == 8
         run_context = Chef::RunContext.new(node, {})
         r = Chef::Resource::Execute.new("update-java-alternatives", run_context)
-        r.command "update-java-alternatives -s java-6-openjdk"
+        r.command "update-java-alternatives -s java-8-openjdk"
         r.returns [0,2]
         r.run_action(:create)
       else
-        # have to do this on ubuntu for version 7 because Ubuntu does
-        # not currently set jdk 7 as the default jvm on installation
+        # have to do this on ubuntu for version 7 because Ubuntu does # n/a now
+        # not currently set jdk 7 as the default jvm on installation # n/a now
         require "fileutils"
         arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
         Chef::Log.debug("glob is #{java_home_parent}/java*#{version}*openjdk*")
