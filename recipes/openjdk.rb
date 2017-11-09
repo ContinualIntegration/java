@@ -52,7 +52,7 @@ if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
         # have to do this on ubuntu for version 7 because Ubuntu does # n/a now
         # not currently set jdk 7 as the default jvm on installation # n/a now
         require "fileutils"
-        arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
+        #arch = node['kernel']['machine'] =~ /x86_64/ ? "x86_64" : "i386"
         Chef::Log.debug("glob is #{java_home_parent}/java*#{version}*openjdk*")
         jdk_home = Dir.glob("#{java_home_parent}/java*#{version}*openjdk{,[-\.]#{arch}}")[0]
         Chef::Log.debug("jdk_home is #{jdk_home}")
@@ -63,8 +63,8 @@ if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
         FileUtils.ln_sf jdk_home, java_home
 
         cmd = Chef::ShellOut.new(
-          %Q[ update-alternatives --install /usr/bin/java java ${java_home}/bin/java 1;
-             update-alternatives --set java ${java_home}/bin/java  ]
+          %Q[ update-alternatives --install /usr/bin/java java #{java_home}/bin/java 1;
+             update-alternatives --set java #{java_home}/bin/java  ]
           ).run_command
         unless cmd.exitstatus == 0 or  cmd.exitstatus == 2
           Chef::Application.fatal!("Failed to update-alternatives for openjdk!")
