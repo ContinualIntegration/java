@@ -63,8 +63,8 @@ if platform?("ubuntu","debian","redhat","centos","fedora","scientific","amazon")
         FileUtils.ln_sf jdk_home, java_home
 
         cmd = Chef::ShellOut.new(
-          %Q[ update-alternatives --install /usr/bin/java java #{java_home}/bin/java 1;
-             update-alternatives --set java #{java_home}/bin/java  ]
+          %Q[ update-alternatives --install /usr/bin/java java ${java_home}/bin/java 1;
+             update-alternatives --set java ${java_home}/bin/java  ]
           ).run_command
         unless cmd.exitstatus == 0 or  cmd.exitstatus == 2
           Chef::Application.fatal!("Failed to update-alternatives for openjdk!")
